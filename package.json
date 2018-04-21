@@ -2,7 +2,7 @@
     "name": "file-creator",
     "displayName": "File Creator",
     "description": "Creates files and open files from text editor",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "publisher": "abishek-aditya",
     "repository": {
         "type": "git",
