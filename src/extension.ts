@@ -17,38 +17,58 @@ export function activate(context: vscode.ExtensionContext) {
     // The command has been defined in the package.json file
     // Now provide the implementation of the command with  registerCommand
     // The commandId parameter must match the command field in package.json
-    let disposable = vscode.commands.registerCommand('extension.createFile', () => {
+    let disposable = vscode.commands.registerCommand('fileCreator.createFile', () => {
         // The code you place here will be executed every time your command is executed
-        let current_editor = vscode.window.activeTextEditor;
+        const current_editor = vscode.window.activeTextEditor;
         if (!current_editor) {
             return;
         }
 
-        let current_file = current_editor.document.fileName;
-        let current_folder = path.dirname(current_file);
+        const current_file = current_editor.document.fileName;
+        const current_folder = path.dirname(current_file);
 
-        let file_path = current_editor.document.getText(current_editor.selection);
+        const file_path = current_editor.document.getText(current_editor.selection).trim();
 
-        let file = create_file(current_folder, file_path);
+        const file = createFile(current_folder, file_path);
         // Display a message box to the user
-        vscode.window.showInformationMessage(file);
+        vscode.window.setStatusBarMessage(file,1000);
+        openFile();
     });
+
+    vscode.commands.registerCommand('fileCreator.openFile', () => openFile());
 
     context.subscriptions.push(disposable);
 }
 
-function create_file(current_folder : string, selection :string) {
-    let folders = selection.substring(0, selection.lastIndexOf('/'));
+function createFile(current_folder : string, selection :string) {
+    const folders = selection.substring(0, selection.lastIndexOf('/'));
 
     mkdirp.sync(current_folder + '/' + folders);
     
-    let file_exists = fs.existsSync(current_folder + '/' + selection);
+    const file_exists = fs.existsSync(current_folder + '/' + selection.trim());
     if(!file_exists){
         fs.writeFileSync(current_folder + '/' + selection, '');
-        return current_folder + '/' + selection;
+        return selection + "Created";
     }else {
         return "File already exists";
     }
+}
+
+function openFile() {
+    const current_editor = vscode.window.activeTextEditor;
+    if (!current_editor) {
+        return;
+    }
+    const selection = current_editor.document.getText(current_editor.selection).trim();
+
+    const current_file = current_editor.document.fileName;
+    const current_folder = path.dirname(current_file);
+    const myPath = path.resolve(current_folder,selection);
+    vscode.workspace.openTextDocument(myPath).then(doc => {
+        const column = vscode.window.visibleTextEditors.findIndex(x => (x.document === doc));
+        vscode.window.showTextDocument(doc, {preview : false, viewColumn: column});
+    });
+    vscode.window.setStatusBarMessage("Opened " + selection, 1000);
 }
 // this method is called when your extension is deactivated
 export function deactivate() {

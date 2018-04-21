@@ -11,21 +11,32 @@
         "Other"
     ],
     "activationEvents": [
-        "onCommand:extension.createFile"
+        "onCommand:fileCreator.createFile",
+        "onCommand:fileCreator.openFile"
     ],
     "main": "./out/extension",
     "contributes": {
         "commands": [
             {
-                "command": "extension.createFile",
+                "command": "fileCreator.createFile",
                 "title": "Create File from selection"
+            },
+            {
+                "command": "fileCreator.openFile",
+                "title": "Open File from selection"
             }
         ],
         "keybindings": [
             {
-                "command": "extension.createFile",
+                "command": "fileCreator.createFile",
                 "key": "shifft+ctrl+i",
                 "mac": "shift+cmd+i",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "fileCreator.openFile",
+                "key": "alt+ctrl+i",
+                "mac": "alt+cmd+i",
                 "when": "editorTextFocus"
             }
         ]
