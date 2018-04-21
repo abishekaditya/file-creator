@@ -2,10 +2,10 @@
     "name": "file-creator",
     "displayName": "File Creator",
     "description": "Creates files and open files from text editor",
-    "version": "0.0.1",
+    "version": "0.0.3",
     "publisher": "abishek-aditya",
     "repository": {
-        "type" : "git",
+        "type": "git",
         "url": "https://github.com/abishekaditya/file-creator"
     },
     "author": {
@@ -56,10 +56,9 @@
         ]
     },
     "scripts": {
-        "vscode:prepublish": "npm run compile",
-        "compile": "tsc -p ./",
+        "vscode:prepublish": "tsc -p ./",
         "watch": "tsc -watch -p ./",
-        "postinstall": "node ./node_modules/vscode/bin/install && npm install",
+        "postinstall": "node ./node_modules/vscode/bin/install",
         "test": "npm run compile && node ./node_modules/vscode/bin/test"
     },
     "devDependencies": {
@@ -69,5 +68,8 @@
         "tslint": "^5.8.0",
         "typescript": "^2.6.1",
         "vscode": "^1.1.6"
+    },
+    "dependencies": {
+        "mkdirp": "^0.5.1"
     }
 }
