@@ -4,6 +4,19 @@
     "description": "Creates files and open files from text editor",
     "version": "0.0.1",
     "publisher": "abishek-aditya",
+    "repository": {
+        "type" : "git",
+        "url": "https://github.com/abishekaditya/file-creator"
+    },
+    "author": {
+        "name": "Abishek Aditya",
+        "url": "http://abishekaditya.me",
+        "email": "abishekaditya@outlook.com"
+    },
+    "galleryBanner": {
+        "color": "#393566",
+        "theme": "dark"
+    },
     "engines": {
         "vscode": "^1.22.0"
     },
